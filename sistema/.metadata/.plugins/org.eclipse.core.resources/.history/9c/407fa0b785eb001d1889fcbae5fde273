@@ -1,0 +1,15 @@
+package datos;
+
+
+public class Administrador {
+
+	private int id_administrador;
+
+	
+	
+	
+	
+	
+	
+	
+}

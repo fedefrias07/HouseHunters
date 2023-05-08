@@ -1,0 +1,51 @@
+package datos;
+
+import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
+
+public class Propietario extends Usuario{
+
+	private String id_propietario;
+
+
+	public Propietario(String nombre, String apellido, String dni, String email, String clave, boolean disponible,
+			int rol, String id_propietario) {
+		super(nombre, apellido, dni, email, clave, disponible, rol);
+		this.id_propietario = id_propietario;
+	
+	}
+
+	
+
+	public String getId_propietario() {
+		return id_propietario;
+	}
+
+	public void setId_propietario(String id_propietario) {
+		this.id_propietario = id_propietario;
+	}
+
+
+//	+CrearPublicacion()
+	
+	public void agregarPublicacion(	Publicacion publicacion, LinkedList<Publicacion> listaPublicacion) {
+        listaPublicacion.add(publicacion);
+        JOptionPane.showMessageDialog(null, "El Propietario " +  this.getNombre() + this.getApellido()  + " ha creado la publicacion");
+        JOptionPane.showMessageDialog(null, "Detalles de la publicacion: " + "\nZona: "+ publicacion.getZona() + "\nDireccion: " + publicacion.getDireccion() + "\nAmbientes: " + publicacion.getAmbientes());
+    }
+	
+	public void eliminarPublicacion(	Publicacion publicacion, LinkedList<Publicacion> listaPublicacion) {
+        listaPublicacion.remove(publicacion);
+        JOptionPane.showMessageDialog(null, "El Propietario " +  this.getNombre() + this.getApellido()  + " ha eliminado la publicacion");
+    }
+}
+
+
+
+
+//  +EditarPublicacion( )
+//	+EliminarPublicacion()
+
+	
+

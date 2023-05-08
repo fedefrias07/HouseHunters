@@ -1,0 +1,51 @@
+package datos;
+
+import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
+
+public class Propietario extends Usuario{
+
+	private String id_propietario;
+	private LinkedList<Publicacion> listaPublicaciones;
+
+	public Propietario(String nombre, String apellido, String dni, String email, String clave, boolean disponible,
+			int rol, String id_propietario) {
+		super(nombre, apellido, dni, email, clave, disponible, rol);
+		this.id_propietario = id_propietario;
+		this.listaPublicaciones = new LinkedList<Publicacion>();
+	}
+
+	public LinkedList<Publicacion> getListaPublicaciones() {
+		return listaPublicaciones;
+	}
+
+	public void setListaPublicaciones(LinkedList<Publicacion> listaPublicaciones) {
+		this.listaPublicaciones = listaPublicaciones;
+	}
+
+	public String getId_propietario() {
+		return id_propietario;
+	}
+
+	public void setId_propietario(String id_propietario) {
+		this.id_propietario = id_propietario;
+	}
+
+
+//	+CrearPublicacion()
+	
+	public void agregarPublicacion(	 int id_publicacion, boolean temporal, boolean comprar, Double precio, String zona, String direccion, String ambientes, String caracteristicas, String estado) {
+        // Crear una nueva instancia de Publicacion
+        Publicacion publicacion = new Publicacion(1,true,false,30.000,"Balvanera","av.corriente 2037","2 ambientes","Casa","Disponible");
+
+        // Agregar la instancia a la lista de publicaciones del propietario
+        this.listaPublicaciones.add(publicacion);
+    }
+}
+
+//  +EditarPublicacion( )
+//	+EliminarPublicacion()
+
+	
+}

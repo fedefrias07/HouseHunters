@@ -1,0 +1,98 @@
+package datos;
+
+import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
+
+public class Propietario extends Usuario{
+
+	private String id_propietario;
+
+
+	public Propietario(String nombre, String apellido, String dni, String email, String clave, boolean disponible,
+			int rol, String id_propietario) {
+		super(nombre, apellido, dni, email, clave, disponible, rol);
+		this.id_propietario = id_propietario;
+	
+	}
+
+	
+
+	public String getId_propietario() {
+		return id_propietario;
+	}
+
+	public void setId_propietario(String id_propietario) {
+		this.id_propietario = id_propietario;
+	}
+
+
+//	+CrearPublicacion()
+	
+	public void agregarPublicacion(	Publicacion publicacion, LinkedList<Publicacion> listaPublicacion) {
+        listaPublicacion.add(publicacion);
+        JOptionPane.showMessageDialog(null, "El Propietario " +  this.getNombre() + this.getApellido()  + " ha creado la publicacion");
+        JOptionPane.showMessageDialog(null, "Detalles de la publicacion: " + "\nZona: "+ publicacion.getZona() + "\nDireccion: " + publicacion.getDireccion() + "\nAmbientes: " + publicacion.getAmbientes());
+    }
+	
+	public void eliminarPublicacion(	Publicacion publicacion, LinkedList<Publicacion> listaPublicacion) {
+        listaPublicacion.remove(publicacion);
+        JOptionPane.showMessageDialog(null, "El Propietario " +  this.getNombre() + this.getApellido()  + " ha eliminado la publicacion");
+        JOptionPane.showMessageDialog(null, "Detalles de la publicacion eliminada: " + "\nZona: "+ publicacion.getZona() + "\nDireccion: " + publicacion.getDireccion() + "\nAmbientes: " + publicacion.getAmbientes());
+    }
+	
+	public void editarPublicacion(Publicacion publicacion,LinkedList<Publicacion> listaPublicacion) {
+	  String opcionEdicion = JOptionPane.showInputDialog("¿Qué desea editar de la publicación?" + "\n1.Zona" + "\n2.Precio" + "\n3.Direccion" + "\n4.Ambientes" + "\5.Caracteristicas"
+	       + "\n6.Estado de la propiedad");
+	   
+	 
+	    switch (opcionEdicion) {
+	        case "1":
+	        	String nuevaZona = JOptionPane.showInputDialog("Ingresar nueva zona: ");
+	        	publicacion.setZona(nuevaZona);
+	            JOptionPane.showMessageDialog(null,"La zona fue actualizada exitosamente.");
+	            break;
+	        case "2":
+	        	Double nuevoPrecio = Double.parseDouble(JOptionPane.showInputDialog("Ingresar nuevo precio: "));
+	        	publicacion.setPrecio(nuevoPrecio);
+	            JOptionPane.showMessageDialog(null,"El precio fue actualizado exitosamente.");
+	           
+	            break;
+	        case "3":
+	            String nuevaDireccion = JOptionPane.showInputDialog("Ingresar nueva direccion: ");
+	        	publicacion.setDireccion(nuevaDireccion);
+	            JOptionPane.showMessageDialog(null,"La direccion fue actualizada exitosamente.");
+	            break;
+	        case "4":
+	            String nuevoAmbientes = JOptionPane.showInputDialog("Ingresar nueva direccion: ");
+	        	publicacion.setAmbientes(nuevoAmbientes);
+	            JOptionPane.showMessageDialog(null,"Los ambientes fueron actualizados exitosamente.");
+	            break;
+	        case "5":
+	    
+	            String nuevaCaracteristica = JOptionPane.showInputDialog("Ingresar las nuevas caracteristicas: ");
+	        	publicacion.setCaracteristicas(nuevaCaracteristica);
+	            JOptionPane.showMessageDialog(null,"Las caracteristicas fueron actualizadas exitosamente.");
+	            break;
+	        case "6":
+	        	String nuevoEstado = JOptionPane.showInputDialog("Ingresar el nuevo estado : ");
+	        	publicacion.setEstado(nuevoEstado);
+	            JOptionPane.showMessageDialog(null,"El estado fue actualizado exitosamente.");
+	            break;
+	    
+	    }
+	 
+	    
+	}
+
+	
+}
+
+
+
+
+//  +EditarPublicacion( )
+//	+EliminarPublicacion()
+
+	
+

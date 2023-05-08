@@ -1,0 +1,13 @@
+package datos;
+
+
+public class Administrador extends Usuario {
+
+	private int id_administrador;
+
+	
+	
+	
+	
+	
+}

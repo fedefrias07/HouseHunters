@@ -1,0 +1,44 @@
+package datos;
+
+import java.util.LinkedList;
+
+public class Resena {
+	
+	private int calificacion;
+	private String comentario;
+	
+	public Resena(int calificacion, String comentario) {
+		super();
+		this.calificacion = calificacion;
+		this.comentario = comentario;
+	}
+
+	public int getCalificacion() {
+		return calificacion;
+	}
+
+	public void setCalificacion(int calificacion) {
+		this.calificacion = calificacion;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+	/*@Override
+	public String toString() {
+		return "Reseña realizada por: "+  + calificacion + ", comentario=" + comentario + "]";
+	}*/
+
+	
+	public String resena(Cliente cliente) {
+		return "Reseña realizada por: "+ cliente.getNombre() + calificacion + ", comentario=" + comentario + "]";
+	}
+	
+	
+	
+}

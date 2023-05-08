@@ -1,0 +1,108 @@
+package datos;
+
+import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
+
+public class Propietario extends Usuario{
+
+	private String id_propietario;
+
+
+	public Propietario(String nombre, String apellido, String dni, String email, String clave, boolean disponible,
+			int rol, String id_propietario) {
+		super(nombre, apellido, dni, email, clave, disponible, rol);
+		this.id_propietario = id_propietario;
+	
+	}
+
+	
+
+	public String getId_propietario() {
+		return id_propietario;
+	}
+
+	public void setId_propietario(String id_propietario) {
+		this.id_propietario = id_propietario;
+	}
+
+
+//	+CrearPublicacion()
+	
+	public void agregarPublicacion(	Publicacion publicacion, LinkedList<Publicacion> listaPublicacion) {
+        listaPublicacion.add(publicacion);
+        JOptionPane.showMessageDialog(null, "El Propietario " +  this.getNombre() + this.getApellido()  + " ha creado la publicacion");
+        JOptionPane.showMessageDialog(null, "Detalles de la publicacion: " + "\nZona: "+ publicacion.getZona() + "\nDireccion: " + publicacion.getDireccion() + "\nAmbientes: " + publicacion.getAmbientes());
+    }
+	
+	public void eliminarPublicacion(	Publicacion publicacion, LinkedList<Publicacion> listaPublicacion) {
+        listaPublicacion.remove(publicacion);
+        JOptionPane.showMessageDialog(null, "El Propietario " +  this.getNombre() + this.getApellido()  + " ha eliminado la publicacion");
+        JOptionPane.showMessageDialog(null, "Detalles de la publicacion eliminada: " + "\nZona: "+ publicacion.getZona() + "\nDireccion: " + publicacion.getDireccion() + "\nAmbientes: " + publicacion.getAmbientes());
+    }
+	
+	public void editarPublicacion(Publicacion publicacion,LinkedList<Publicacion> listaPublicacion) {
+	    Scanner scanner = new Scanner(System.in);
+	    System.out.println("¿Qué desea editar de la publicación?");
+	    System.out.println("1. Título");
+	    System.out.println("2. Descripción");
+	    System.out.println("3. Dirección");
+	    System.out.println("4. Precio");
+	    System.out.println("5. Tipo de propiedad");
+	    System.out.println("6. Estado de la propiedad");
+	    int opcion = scanner.nextInt();
+	    scanner.nextLine(); // Consumimos el salto de línea después de leer el entero
+	    switch (opcion) {
+	        case 1:
+	            System.out.println("Ingrese el nuevo título:");
+	            String nuevoTitulo = scanner.nextLine();
+	            publicacion.setTitulo(nuevoTitulo);
+	            System.out.println("Título actualizado exitosamente.");
+	            break;
+	        case 2:
+	            System.out.println("Ingrese la nueva descripción:");
+	            String nuevaDescripcion = scanner.nextLine();
+	            publicacion.setDescripcion(nuevaDescripcion);
+	            System.out.println("Descripción actualizada exitosamente.");
+	            break;
+	        case 3:
+	            System.out.println("Ingrese la nueva dirección:");
+	            String nuevaDireccion = scanner.nextLine();
+	            publicacion.setDireccion(nuevaDireccion);
+	            System.out.println("Dirección actualizada exitosamente.");
+	            break;
+	        case 4:
+	            System.out.println("Ingrese el nuevo precio:");
+	            double nuevoPrecio = scanner.nextDouble();
+	            publicacion.setPrecio(nuevoPrecio);
+	            System.out.println("Precio actualizado exitosamente.");
+	            break;
+	        case 5:
+	            System.out.println("Ingrese el nuevo tipo de propiedad:");
+	            String nuevoTipo = scanner.nextLine();
+	            publicacion.setTipoPropiedad(nuevoTipo);
+	            System.out.println("Tipo de propiedad actualizado exitosamente.");
+	            break;
+	        case 6:
+	            System.out.println("Ingrese el nuevo estado de la propiedad:");
+	            String nuevoEstado = scanner.nextLine();
+	            publicacion.setEstado(nuevoEstado);
+	            System.out.println("Estado de la propiedad actualizado exitosamente.");
+	            break;
+	        default:
+	            System.out.println("Opción inválida.");
+	            break;
+	    }
+	}
+
+	
+}
+
+
+
+
+//  +EditarPublicacion( )
+//	+EliminarPublicacion()
+
+	
+

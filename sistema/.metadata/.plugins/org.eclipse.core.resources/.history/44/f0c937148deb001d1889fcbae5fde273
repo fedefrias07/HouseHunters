@@ -1,0 +1,41 @@
+package datos;
+
+public class Propietario extends Usuario{
+
+	private int id_propietario;
+
+
+	
+	public Propietario(String nombre, String apellido, String dni, String email, String clave, int rol,
+			int id_propietario) {
+		super(nombre, apellido, dni, email, clave, rol);
+		this.id_propietario = id_propietario;
+	}
+
+
+
+	public int getId_propietario() {
+		return id_propietario;
+	}
+
+
+
+	public void setId_propietario(int id_propietario) {
+		this.id_propietario = id_propietario;
+	}
+
+
+
+	public boolean Login(String dni, String clave) {
+
+		if (dni.length() == 8 && this.getDni().equals(dni) && this.getClave().equals(clave)) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
+	
+	
+	
+}
