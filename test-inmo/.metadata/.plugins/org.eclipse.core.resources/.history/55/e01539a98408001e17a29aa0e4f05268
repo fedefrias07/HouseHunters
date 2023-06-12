@@ -1,0 +1,87 @@
+package Datos;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
+
+
+public class Cliente extends Usuario {
+
+	private String id_cliente;
+	
+	
+	
+	Conexion con =  new Conexion();
+    Connection conexion = con.conectar();
+    PreparedStatement stmt;
+
+	public Cliente(String nombre, String apellido, String dni, String email, String clave, boolean disponible, int rol,
+			String id_cliente, int id) {
+		super(nombre, apellido, dni, email, clave, disponible, rol, id);
+		this.id_cliente = id_cliente;
+	}
+
+	public String getId_cliente() {
+		return id_cliente;
+	}
+
+	public void setId_cliente(String id_cliente) {
+		this.id_cliente = id_cliente;
+	}
+	
+
+	public void verPublicaciones(LinkedList<Publicacion> listaPublicacion) {
+
+		for (Publicacion publicacion : listaPublicacion) {
+
+			JOptionPane.showMessageDialog(null, this.getNombre() + " " + this.getApellido()
+					+ " estas son las publicaciones disponibles: " + publicacion);
+
+		}
+
+	}
+	
+	
+
+	public boolean crearTransaccion(Transaccion transaccion) {
+        String sql = "INSERT INTO transaccion (nro_tarjeta, clave_seguridad, nombretarjeta, cliente_id, publicacion_id, ) VALUES (?, ?, ?, ?, ?)";
+
+        try {
+            //PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+
+            stmt = conexion.prepareStatement(sql); //PREPARO LA CONEXION
+            stmt.setString(1, transaccion.getNro_tarjeta());
+            stmt.setString(2, transaccion.getClave_seguridad());
+            stmt.setString(3, transaccion.getNombretarjeta());
+            stmt.setLong(4, transaccion.getCliente_id());
+            stmt.setLong(5, transaccion.getPublicacion_id());
+
+
+            System.out.println("ID PROPIETARIO ");
+            stmt.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Se realizo la transaccion");
+
+
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+        
+	 }
+	
+}
+	
+	
+
+	
+	
+	
+	
+
+	
+
+

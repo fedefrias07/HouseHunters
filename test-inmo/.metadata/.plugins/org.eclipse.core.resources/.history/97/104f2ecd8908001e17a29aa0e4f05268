@@ -1,0 +1,135 @@
+package Datos;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
+
+
+public class Cliente extends Usuario {
+
+	private String id_cliente;
+	
+	
+	
+	Conexion con =  new Conexion();
+    Connection conexion = con.conectar();
+    PreparedStatement stmt;
+
+	public Cliente(String nombre, String apellido, String dni, String email, String clave, boolean disponible, int rol,
+			String id_cliente, int id) {
+		super(nombre, apellido, dni, email, clave, disponible, rol, id);
+		this.id_cliente = id_cliente;
+	}
+
+	public String getId_cliente() {
+		return id_cliente;
+	}
+
+	public void setId_cliente(String id_cliente) {
+		this.id_cliente = id_cliente;
+	}
+	
+
+	public void verPublicaciones(LinkedList<Publicacion> listaPublicacion) {
+
+		for (Publicacion publicacion : listaPublicacion) {
+
+			JOptionPane.showMessageDialog(null, this.getNombre() + " " + this.getApellido()
+					+ " estas son las publicaciones disponibles: " + publicacion);
+
+		}
+
+	}
+	
+	
+	
+	public boolean crearTransaccion(Transaccion transaccion) {
+        String sql = "INSERT INTO transaccion (nro_tarjeta, clave_seguridad, nombretarjeta, cliente_id, publicacion_id, precio) VALUES (?, ?, ?, ?, ?, ?)";
+
+        try {
+            stmt = conexion.prepareStatement(sql); //PREPARO LA CONEXION
+            stmt.setString(1, transaccion.getNro_tarjeta());
+            stmt.setString(2, transaccion.getClave_seguridad());
+            stmt.setString(3, transaccion.getNombretarjeta());
+            stmt.setLong(4, transaccion.getCliente_id());
+            stmt.setLong(5, transaccion.getPublicacion_id());
+            stmt.setDouble(6, transaccion.getPrecio());
+
+            stmt.executeUpdate();
+
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+	
+	}
+	
+	
+	
+	public boolean crearResena(Resena resena) {
+        String sql = "INSERT INTO resena (comentario, estrellas, cliente_id, publicacion_id) VALUES (?, ?, ?, ?)";
+
+        try {
+            stmt = conexion.prepareStatement(sql); //PREPARO LA CONEXION
+            stmt.setString(1, resena.getComentario());
+            stmt.setString(2, resena.getEstrellas());
+            stmt.setLong(3, resena.getCliente_id());
+            stmt.setLong(4, resena.getPublicacion_id());
+
+
+            stmt.executeUpdate();
+
+            return true;
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
+    }
+	
+	
+	public LinkedList<Resena> traerResena() {
+		LinkedList<Resena> resena = new LinkedList<Resena>();
+
+		String sql = "SELECT * FROM `resena` ";
+		String[] datos = new String[4];
+		try {
+			stmt = conexion.prepareStatement(sql);
+			ResultSet result = stmt.executeQuery();
+			while (result.next()) {
+				datos[0] = String.valueOf(result.getInt(1));
+				datos[1] = result.getString(2);
+				datos[2] = result.getString(3);
+				datos[3] = String.valueOf(result.getInt(4));
+				datos[4] = String.valueOf(result.getDouble(5));
+				
+
+				resena.add(new Resena(Integer.parseInt(datos[2]),datos[0], datos[1],Integer.parseInt(datos[2]),Double.parseDouble(datos[3])));
+
+			}
+			return resena;
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	
+	
+	
+}
+	
+	
+
+	
+	
+	
+	
+
+	
+
+

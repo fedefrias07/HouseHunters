@@ -1,0 +1,53 @@
+package Datos;
+
+public class Transaccion {
+	
+	private int nro_tarjeta;
+	private int clave_seguridad;
+	private String nombretarjeta;
+	private int id_publicacion;
+	private int id_clinte;
+	public Transaccion(int nro_tarjeta, int clave_seguridad, String nombretarjeta, int id_publicacion, int id_clinte) {
+		super();
+		this.nro_tarjeta = nro_tarjeta;
+		this.clave_seguridad = clave_seguridad;
+		this.nombretarjeta = nombretarjeta;
+		this.id_publicacion = id_publicacion;
+		this.id_clinte = id_clinte;
+	}
+	public int getNro_tarjeta() {
+		return nro_tarjeta;
+	}
+	public void setNro_tarjeta(int nro_tarjeta) {
+		this.nro_tarjeta = nro_tarjeta;
+	}
+	public int getClave_seguridad() {
+		return clave_seguridad;
+	}
+	public void setClave_seguridad(int clave_seguridad) {
+		this.clave_seguridad = clave_seguridad;
+	}
+	public String getNombretarjeta() {
+		return nombretarjeta;
+	}
+	public void setNombretarjeta(String nombretarjeta) {
+		this.nombretarjeta = nombretarjeta;
+	}
+	public int getId_publicacion() {
+		return id_publicacion;
+	}
+	public void setId_publicacion(int id_publicacion) {
+		this.id_publicacion = id_publicacion;
+	}
+	public int getId_clinte() {
+		return id_clinte;
+	}
+	public void setId_clinte(int id_clinte) {
+		this.id_clinte = id_clinte;
+	}
+	
+	
+	
+	
+	
+}

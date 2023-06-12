@@ -1,0 +1,13 @@
+package Datos;
+
+public class Transaccion {
+	
+	private int nro_tarjeta;
+	private int clave_seguridad;
+	private String nombre;
+	private int id_publicacion;
+	private int id_clinte;
+	
+	
+	
+}

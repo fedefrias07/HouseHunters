@@ -1,0 +1,213 @@
+package Datos;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.LinkedList;
+
+import com.mysql.jdbc.Statement;
+
+public class Usuario {
+
+	private String nombre;
+	private String apellido;
+	private String dni;
+	private String email;
+	private String clave;
+	private boolean disponible;
+	private int rol;
+	private int id_usuario;
+
+	Conexion con = new Conexion();
+	Connection conexion = con.conectar();
+	PreparedStatement stmt;
+
+	public Usuario(String nombre, String apellido, String dni, String email, String clave, boolean disponible, int rol,
+			int id_usuario) {
+		super();
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.dni = dni;
+		this.email = email;
+		this.clave = clave;
+		this.disponible = disponible;
+		this.rol = rol;
+		this.id_usuario = id_usuario;
+	}
+
+	public String getNombre() {
+		return nombre;
+	}
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getClave() {
+		return clave;
+	}
+
+	public void setClave(String clave) {
+		this.clave = clave;
+	}
+
+	public boolean isDisponible() {
+		return disponible;
+	}
+
+	public void setDisponible(boolean disponible) {
+		this.disponible = disponible;
+	}
+
+	public int getRol() {
+		return rol;
+	}
+
+	public void setRol(int rol) {
+		this.rol = rol;
+	}
+
+	public int getId_usuario() {
+		return id_usuario;
+	}
+
+	public void setId_usuario(int id_usuario) {
+		this.id_usuario = id_usuario;
+	}
+
+	
+	
+	@Override
+	public String toString() {
+		return "Nombre: " + nombre + "\nApellido: " + apellido + "\nDni: " + dni + "\nEmail: " + email + "Clave: "
+				+ clave + "Disponible: " + disponible + "Rol=: " + rol + "\nid_usuario=" + id_usuario + "]";
+	}
+
+	public boolean guardarUsuario() {
+		String sql = "INSERT INTO `usuario` (`nombre`, `apellido`, `dni`, `email`, `clave`, `disponible`, `rol`) VALUES (?, ?, ?, ?, ?, ?, ?)";
+
+		try {
+			PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			stmt.setString(1, this.getNombre());
+			stmt.setString(2, this.getApellido());
+			stmt.setString(3, this.getDni());
+			stmt.setString(4, this.getEmail());
+			stmt.setString(5, this.getClave());
+			stmt.setBoolean(6, this.disponible);
+			stmt.setInt(7, this.getRol());
+			stmt.executeUpdate();
+
+			ResultSet generatedKeys = stmt.getGeneratedKeys();
+			int idUsuario = 0;
+
+			if (generatedKeys.next()) {
+				idUsuario = generatedKeys.getInt(1);
+			}
+
+			// Si el rol es "propietario" (2), ingresa en la tabla "propietario"
+			if (this.getRol() == 2) {
+				String propietarioSql = "INSERT INTO `propietario` (`id_usuario`) VALUES (?)";
+				PreparedStatement propietarioStmt = conexion.prepareStatement(propietarioSql);
+				propietarioStmt.setInt(1, idUsuario);
+				propietarioStmt.executeUpdate();
+
+			} else if (this.getRol() == 3) {
+				String clienteSql = "INSERT INTO `cliente` (`id_usuario`) VALUES (?)";
+				PreparedStatement clienteStmt = conexion.prepareStatement(clienteSql);
+				clienteStmt.setInt(1, idUsuario);
+				clienteStmt.executeUpdate();
+			} else {
+
+			}
+
+			return true;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return false;
+		}
+
+	}
+
+	public LinkedList<Usuario> traerUsuario() {
+		LinkedList<Usuario> usuarios = new LinkedList<Usuario>();
+
+		String sql = "SELECT * FROM `usuario` ";
+		String[] datos = new String[8];
+		try {
+			stmt = conexion.prepareStatement(sql);
+			ResultSet result = stmt.executeQuery();
+			while (result.next()) {
+				datos[0] = result.getString(1);
+				datos[1] = result.getString(2);
+				datos[2] = result.getString(3);
+				datos[3] = result.getString(4);
+				datos[4] = result.getString(5);
+				datos[5] = String.valueOf(result.getBoolean(6));
+				datos[6] = String.valueOf(result.getInt(7));
+				datos[7] = String.valueOf(result.getInt(8));
+
+				usuarios.add(new Usuario(datos[0], datos[1], datos[2], datos[3], datos[4],
+						Boolean.parseBoolean(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7])));
+
+			}
+			return usuarios;
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+	public LinkedList<Usuario> traerUsuarioPorId(int id) {
+		LinkedList<Usuario> usuarios = new LinkedList<Usuario>();
+		String sql = "SELECT * FROM `usuario` WHERE id_usuario = ?";
+		String[] datos = new String[8];
+		try {
+			stmt = conexion.prepareStatement(sql);
+			stmt.setInt(1, id); // aca va el id que queremos buscar
+			ResultSet result = stmt.executeQuery();
+			while (result.next()) {
+				datos[0] = result.getString(1);
+				datos[1] = result.getString(2);
+				datos[2] = result.getString(3);
+				datos[3] = result.getString(4);
+				datos[4] = result.getString(5);
+				datos[5] = String.valueOf(result.getBoolean(6));
+				datos[6] = String.valueOf(result.getInt(7));
+				datos[7] = String.valueOf(result.getInt(8));
+
+				usuarios.add(new Usuario(datos[0], datos[1], datos[2], datos[3], datos[4],
+						Boolean.parseBoolean(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7])));
+			}
+			return usuarios;
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+
+}

@@ -1,0 +1,163 @@
+package Datos;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.LinkedList;
+
+import javax.swing.JOptionPane;
+import com.mysql.jdbc.Statement;
+
+public class Propietario extends Usuario {
+
+	private int id_propietario;
+	
+	Conexion con = new Conexion();
+	Connection conexion = con.conectar();
+	PreparedStatement stmt;
+
+		public Propietario(String nombre, String apellido, String dni, String email, String clave, boolean disponible,
+			int rol, int id_usuario, int id_propietario) {
+		super(nombre, apellido, dni, email, clave, disponible, rol, id_usuario);
+		this.id_propietario = id_propietario;
+	}
+		
+
+
+		public int getId_propietario() {
+			return id_propietario;
+		}
+
+		public void setId_propietario(int id_propietario) {
+			this.id_propietario = id_propietario;
+		}
+
+
+		public boolean crearPublicacion(Publicacion publicacion, int id_propietario) {
+		    String sql = "INSERT INTO publicacion (nombre, temporal, comprar, precio, zona, direccion, ambientes, caracteristicas, estado, id_propietario) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?,?)";
+		   
+		    try {
+		        //PreparedStatement stmt = conexion.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+		        
+		        stmt = conexion.prepareStatement(sql); //PREPARO LA CONEXION
+		        stmt.setString(1, publicacion.getNombre());
+		        stmt.setBoolean(2, publicacion.isTemporal());
+		        stmt.setBoolean(3, publicacion.isComprar());
+		        stmt.setLong(4, publicacion.getPrecio());
+		        stmt.setString(5, publicacion.getZona());
+		        stmt.setString(6, publicacion.getDireccion());
+		        stmt.setLong(7, publicacion.getAmbientes());
+		        stmt.setString(8, publicacion.getCaracteristicas());
+		        stmt.setString(9, publicacion.getEstado());
+		        stmt.setLong(10, id_propietario);
+		        
+		        System.out.println("ID PROPIETARIO " +id_propietario);
+		        stmt.executeUpdate();
+		        
+		        JOptionPane.showMessageDialog(null, "Se creo la publicacion");
+		        
+		     
+		        return true;
+		    } catch (Exception e) {
+		        System.out.println(e.getMessage());
+		        return false;
+		    }
+		    
+		    
+		}
+		
+		
+		public LinkedList<Publicacion> traerPublicacion() {
+			LinkedList<Publicacion> publicacion = new LinkedList<Publicacion>();
+
+			String sql = "SELECT * FROM `publicacion` ";
+			String[] datos = new String[10];
+			try {
+				stmt = conexion.prepareStatement(sql);
+				ResultSet result = stmt.executeQuery();
+				while (result.next()) {
+					datos[0] = String.valueOf(result.getInt(1));
+					datos[1] = result.getString(2);
+					datos[2] = String.valueOf(result.getBoolean(3));
+					datos[3] = String.valueOf(result.getBoolean(4));
+					datos[4] = String.valueOf(result.getInt(5));
+					datos[5] = result.getString(6);
+					datos[6] = result.getString(7);
+					datos[7] = String.valueOf(result.getInt(8));
+					datos[8] = result.getString(9);
+					datos[9] = result.getString(10);
+					datos[7] = String.valueOf(result.getInt(11));
+					
+
+					publicacion.add(new Publicacion(Integer.parseInt(datos[0]),datos[1], Boolean.parseBoolean(datos[2]), Boolean.parseBoolean(datos[3]), Integer.parseInt(datos[4]), datos[5],datos[6], Integer.parseInt(datos[7]), datos[8], datos[9]));
+
+				}
+				return publicacion;
+
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+				return null;
+			}
+		}
+		
+	
+	
+	public boolean eliminarPublicacion(String id) {
+	    try {
+	        
+	            // Eliminar publicacion
+	            String eliminarPublicacionSQL = "DELETE FROM publicacion WHERE id_publicacion = ?";
+	            PreparedStatement eliminarPublicacionStmt = conexion.prepareStatement(eliminarPublicacionSQL);
+	            eliminarPublicacionStmt.setString(1, id);
+	            eliminarPublicacionStmt.executeUpdate();
+	            System.out.println("Se eliminó la publicacion: " + id);
+	           
+
+	        return true;
+	    } catch (Exception e) {
+	        System.out.println(e.getMessage());
+	        return false;
+	    }
+	}
+	
+	/*
+	public LinkedList<Propietario> traerPropietario(int id) {
+		LinkedList<Propietario> propietario = new LinkedList<Propietario>();
+
+		String sql = "SELECT * FROM `usuario` WHERE id_propietario = ?";
+		String[] datos = new String[9];
+		try {
+			stmt = conexion.prepareStatement(sql);
+			stmt.setInt(1, id); // aca va el id que queremos buscar
+			ResultSet result = stmt.executeQuery();
+			while (result.next()) {
+				datos[0] = result.getString(1);
+				datos[1] = result.getString(2);
+				datos[2] = result.getString(3);
+				datos[3] = result.getString(4);
+				datos[4] = result.getString(5);
+				datos[5] = String.valueOf(result.getBoolean(6));
+				datos[6] = String.valueOf(result.getInt(7));
+				datos[7] = String.valueOf(result.getInt(8));
+				datos[8] = String.valueOf(result.getInt(9));
+				
+
+				propietario.add(new Propietario(datos[0], datos[1], datos[2], datos[3], datos[4],
+						Boolean.parseBoolean(datos[5]), Integer.parseInt(datos[6]), Integer.parseInt(datos[7]),Integer.parseInt(datos[8])));
+
+			}
+			return propietario;
+
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			return null;
+		}
+	}
+	
+	
+	*/
+	
+
+
+}

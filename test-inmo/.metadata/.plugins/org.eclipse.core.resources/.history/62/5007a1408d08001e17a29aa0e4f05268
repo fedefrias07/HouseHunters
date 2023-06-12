@@ -1,0 +1,66 @@
+package Datos;
+
+public class Resena {
+
+	private int id_resena;
+	private String comentario;
+	private String estrellas;
+	private int cliente_id;
+	private int publicacion_id;
+
+	public Resena(int id_resena, String comentario, String estrellas, int cliente_id, int publicacion_id) {
+		super();
+		this.id_resena = id_resena;
+		this.comentario = comentario;
+		this.estrellas = estrellas;
+		this.cliente_id = cliente_id;
+		this.publicacion_id = publicacion_id;
+	}
+
+	public int getId_resena() {
+		return id_resena;
+	}
+
+	public void setId_resena(int id_resena) {
+		this.id_resena = id_resena;
+	}
+
+	public String getComentario() {
+		return comentario;
+	}
+
+	public void setComentario(String comentario) {
+		this.comentario = comentario;
+	}
+
+	public String getEstrellas() {
+		return estrellas;
+	}
+
+	public void setEstrellas(String estrellas) {
+		this.estrellas = estrellas;
+	}
+
+	public int getCliente_id() {
+		return cliente_id;
+	}
+
+	public void setCliente_id(int cliente_id) {
+		this.cliente_id = cliente_id;
+	}
+
+	public int getPublicacion_id() {
+		return publicacion_id;
+	}
+
+	public void setPublicacion_id(int publicacion_id) {
+		this.publicacion_id = publicacion_id;
+	}
+
+	@Override
+	public String toString() {
+		return "Comentario: " + comentario + "\nEstrellas=" + estrellas
+				+ "\nRealizada por: " + cliente_id + "Publicacion_id=" + publicacion_id + "]";
+	}
+
+}

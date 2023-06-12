@@ -1,0 +1,58 @@
+package Datos;
+
+public class Transaccion {
+	
+	private int nro_tarjeta;
+	private int clave_seguridad;
+	private String nombretarjeta;
+	private int cliente_id;
+	private int publicacion_id;
+	public Transaccion(int nro_tarjeta, int clave_seguridad, String nombretarjeta, int cliente_id, int publicacion_id) {
+		super();
+		this.nro_tarjeta = nro_tarjeta;
+		this.clave_seguridad = clave_seguridad;
+		this.nombretarjeta = nombretarjeta;
+		this.cliente_id = cliente_id;
+		this.publicacion_id = publicacion_id;
+	}
+	public int getNro_tarjeta() {
+		return nro_tarjeta;
+	}
+	public void setNro_tarjeta(int nro_tarjeta) {
+		this.nro_tarjeta = nro_tarjeta;
+	}
+	public int getClave_seguridad() {
+		return clave_seguridad;
+	}
+	public void setClave_seguridad(int clave_seguridad) {
+		this.clave_seguridad = clave_seguridad;
+	}
+	public String getNombretarjeta() {
+		return nombretarjeta;
+	}
+	public void setNombretarjeta(String nombretarjeta) {
+		this.nombretarjeta = nombretarjeta;
+	}
+	public int getCliente_id() {
+		return cliente_id;
+	}
+	public void setCliente_id(int cliente_id) {
+		this.cliente_id = cliente_id;
+	}
+	public int getPublicacion_id() {
+		return publicacion_id;
+	}
+	public void setPublicacion_id(int publicacion_id) {
+		this.publicacion_id = publicacion_id;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+}
